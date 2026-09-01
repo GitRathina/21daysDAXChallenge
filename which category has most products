@@ -1,0 +1,35 @@
+Most Products = 
+CALCULATE(
+    SELECTEDVALUE(
+        Category[CategoryName], 
+        "Mas de un resultado"
+    ),
+    TOPN(
+        1, 
+        Category,
+        CALCULATE(COUNT(Products[ProductID])),
+        DESC,
+        Category[CategoryID],
+        ASC
+    )
+)
+
+--------------------------------------------------------
+
+Top category = 
+
+VAR T = 
+           ADDCOLUMNS(
+            VALUES(Products[CategoryID]),
+           "ProductCount", CALCULATE(COUNTROWS(Products))
+           )
+
+VAR  MAXcount = 
+     MAXX(T,[ProductCount])
+
+VAR  Toprow = 
+    FILTER(T, [ProductCount] = MAXcount)
+
+VAR TOPID = MAXX(Toprow, Products[CategoryID])
+
+RETURN LOOKUPVALUE(Category[CategoryName], Category[CategoryID],TOPID)
