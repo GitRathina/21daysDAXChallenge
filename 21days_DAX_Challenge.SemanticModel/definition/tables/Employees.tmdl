@@ -1,0 +1,59 @@
+table Employees
+	lineageTag: ea3aa8d4-910e-46d4-be3d-414759445737
+
+	column EmployeeID
+		dataType: int64
+		formatString: 0
+		lineageTag: 60b06087-2092-4a24-ac9d-591b5513f37d
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeName
+		dataType: string
+		lineageTag: 2db197d2-db8e-4171-b79d-ddf7eec86b86
+		summarizeBy: none
+		sourceColumn: EmployeeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column JobTitle
+		dataType: string
+		lineageTag: 1ec73426-1da9-474e-93a3-7bc7ed6b9f17
+		summarizeBy: none
+		sourceColumn: JobTitle
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: abec7f21-a37c-4dc0-bf47-309248045b77
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: ea251e30-2054-46d6-b39c-8e858be49aac
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Employees = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("Z:\DAXChallenge.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Employees", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"EmployeeID", Int64.Type}, {"EmployeeName", type text}, {"JobTitle", type text}, {"Department", type text}, {"City", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

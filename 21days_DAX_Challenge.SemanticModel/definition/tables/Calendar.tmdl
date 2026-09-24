@@ -1,0 +1,96 @@
+table Calendar
+	lineageTag: ead946d6-26e3-46ff-8680-d836ea32924b
+
+	measure 'Lowest Avg' =
+			
+			VAR TopProduct =
+			    TOPN(
+			        1,
+			        Products,
+			        CALCULATE(AVERAGE(OrderDetail[Quantity])),
+			        ASC
+			    )
+			RETURN
+			    CALCULATE(
+			        SELECTEDVALUE(Products[ProductName]),
+			        TopProduct
+			    )
+		lineageTag: 8da1020e-ca45-4224-b0e2-93ce4d946090
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0a4ac666-1e07-4154-b3f2-5d4ff77792bc
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 863fc4f5-dab7-4b75-834a-8990d6944e69
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ca60cdc-8130-439d-baa6-098a3b90f212
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: df770e76-eb9b-4820-8ca3-78da98266844
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dayname
+		dataType: int64
+		formatString: 0
+		lineageTag: d3ead697-2838-4766-b2f9-6734e15afebf
+		summarizeBy: sum
+		sourceColumn: Dayname
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b0c5bc5e-8609-4f87-b5fa-03563bcd4932
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		variation Variation
+			isDefault
+			relationship: 4dab274f-6fbe-4fbd-8493-f79b72cd2e0d
+			defaultHierarchy: LocalDateTable_aa905f75-96a8-42e9-b8d6-6ca572a0161c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("Z:\DAXChallenge.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Calendar", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Date", type date}, {"Year", Int64.Type}, {"Month", Int64.Type}, {"Dayname", Int64.Type}, {"YearMonth", type date}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

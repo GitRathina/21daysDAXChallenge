@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "65c5eac93f7251b446ba",
+  "position": {
+    "x": 906.45418326693232,
+    "y": 84.621513944223111,
+    "z": 1,
+    "height": 337.05179282868528,
+    "width": 272.50996015936255
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measure Table"
+                    }
+                  },
+                  "Property": "Top category"
+                }
+              },
+              "queryRef": "Measure Table.Top category",
+              "nativeQueryRef": "Top category"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "936797a810009e1d57b7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measure Table"
+              }
+            },
+            "Property": "Top category"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

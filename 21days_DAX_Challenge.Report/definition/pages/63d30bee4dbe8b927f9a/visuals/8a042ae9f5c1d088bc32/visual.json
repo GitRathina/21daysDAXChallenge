@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "8a042ae9f5c1d088bc32",
+  "position": {
+    "x": 535.69721115537857,
+    "y": 283.98406374501991,
+    "z": 1000,
+    "height": 152.03187250996018,
+    "width": 398.72509960159363,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measure Table"
+                    }
+                  },
+                  "Property": "Top1product"
+                }
+              },
+              "queryRef": "Calendar.Top1product",
+              "nativeQueryRef": "Top1product"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

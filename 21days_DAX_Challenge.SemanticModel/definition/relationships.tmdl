@@ -1,0 +1,45 @@
+relationship 2b9aab0b-bded-48c6-a2ca-79330f510446
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Orders.OrderDate
+	toColumn: LocalDateTable_4a533915-58d0-4ed6-9a48-b14a0b4bebd1.Date
+
+relationship cda44a5b-3eaf-4e98-bdb2-33c308e75355
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Orders.ShipDate
+	toColumn: LocalDateTable_ada71a0f-4ebd-49d1-ab3c-d2bd17d69f2d.Date
+
+relationship 4dab274f-6fbe-4fbd-8493-f79b72cd2e0d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.YearMonth
+	toColumn: LocalDateTable_aa905f75-96a8-42e9-b8d6-6ca572a0161c.Date
+
+relationship e4b5f550-ae16-27f5-3dd8-5c5b8b6144be
+	fromColumn: OrderDetail.OrderID
+	toColumn: Orders.OrderID
+
+relationship 1a84b2f2-3890-604f-1bec-b27f716a09f2
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Calendar.Date
+	toColumn: Orders.OrderDate
+
+relationship ffed854d-2b3d-eb1d-522d-52de125118f2
+	fromColumn: Orders.EmployeeID
+	toColumn: Employees.EmployeeID
+
+relationship fbacb380-2a97-2472-30d6-edd924d77e46
+	fromColumn: Orders.CustomerID
+	toColumn: Customers.CustomerID
+
+relationship 0a3fe593-c308-cb8a-069b-17beb22bbc8c
+	fromColumn: OrderDetail.ProductID
+	toColumn: Products.ProductID
+
+relationship 8a5ad81d-f07f-ea07-963e-2ade0f3c87d6
+	fromColumn: Products.CategoryID
+	toColumn: Category.CategoryID
+
+relationship cfd27668-c87f-0ab0-1105-94f7345ed5e8
+	fromColumn: Products.SupplierID
+	toColumn: Suppliers.SupplierID
+

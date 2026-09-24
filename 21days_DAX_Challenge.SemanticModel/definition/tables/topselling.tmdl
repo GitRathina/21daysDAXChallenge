@@ -1,0 +1,62 @@
+table topselling
+	lineageTag: 02239be6-8157-432c-a2e4-9d2d9448d8a9
+
+	column ProductID
+		formatString: 0
+		lineageTag: 663850ad-5208-431e-acf3-14b0aca11d60
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: Products[ProductID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		lineageTag: 636b6144-30ad-49a0-9ea4-d7012258c11e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Products[ProductName]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CategoryID
+		formatString: 0
+		lineageTag: 80553d55-f56b-468d-aa58-c82b192e7710
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: Products[CategoryID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierID
+		formatString: 0
+		lineageTag: 1b0f95e3-64f6-422f-8cb7-4ec4b4e67574
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: Products[SupplierID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		formatString: 0
+		lineageTag: 57856e79-930b-42b6-bee2-e9918b1f98cb
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Products[UnitPrice]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discontinued
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 499dcaee-0094-4f71-9757-d763d5256379
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Products[Discontinued]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition topselling = calculated
+		mode: import
+		source = TOPN(2, Products,CALCULATE(SUM(OrderDetail[Quantity])),DESC)
+
+	annotation PBI_Id = 2c3d15e36d624703abe8dad7d8f7873c
+

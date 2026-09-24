@@ -1,0 +1,71 @@
+table Products
+	lineageTag: d7cee0fd-cc6f-4aee-9cab-9d47a664f072
+
+	column ProductID
+		dataType: int64
+		formatString: 0
+		lineageTag: bb87c09b-f5da-4bfe-b809-4d36ff2eb19e
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: e8fd499d-7e5c-4c3f-8594-0f355cfe8faf
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CategoryID
+		dataType: int64
+		formatString: 0
+		lineageTag: 86f42f1c-0b12-46e4-a56e-1de64d2ca0bc
+		summarizeBy: none
+		sourceColumn: CategoryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierID
+		dataType: int64
+		formatString: 0
+		lineageTag: e092d82d-62a4-4faa-a18c-ad37dba1f5a9
+		summarizeBy: none
+		sourceColumn: SupplierID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: int64
+		formatString: 0.0
+		lineageTag: aa204e5f-2818-416d-b17a-fafce11d1e22
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discontinued
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 115aa01f-4d02-4812-87c9-0166e603c9a9
+		summarizeBy: none
+		sourceColumn: Discontinued
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("Z:\DAXChallenge.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Products", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"ProductID", Int64.Type}, {"ProductName", type text}, {"CategoryID", Int64.Type}, {"SupplierID", Int64.Type}, {"UnitPrice", Int64.Type}, {"Discontinued", type logical}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

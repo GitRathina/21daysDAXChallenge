@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "6e158406be3eeb98b2bf",
+  "position": {
+    "x": 699.20704845814976,
+    "y": 188.89867841409693,
+    "z": 1000,
+    "height": 300.26431718061673,
+    "width": 300.26431718061673,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Calendar"
+                    }
+                  },
+                  "Property": "Lowest Avg"
+                }
+              },
+              "queryRef": "Calendar.Lowest Avg",
+              "nativeQueryRef": "Lowest Avg"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

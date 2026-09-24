@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "f8a9cda7c8a2337cd221",
+  "position": {
+    "x": 650,
+    "y": 330,
+    "z": 3,
+    "height": 254,
+    "width": 285,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measure Table"
+                    }
+                  },
+                  "Property": "Avg Price of discontinued products_Anotherway"
+                }
+              },
+              "queryRef": "Measure Table.Avg Price of discontinued products_Anotherway",
+              "nativeQueryRef": "Avg Price of discontinued products_Anotherway"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Measure Table"
+                  }
+                },
+                "Property": "Avg Price of discontinued products_Anotherway"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9e39ed9f170279092ce7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measure Table"
+              }
+            },
+            "Property": "Avg Price of discontinued products_Anotherway"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "f3a46d7f6017570594a9",
+  "displayName": "Challenge 2",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

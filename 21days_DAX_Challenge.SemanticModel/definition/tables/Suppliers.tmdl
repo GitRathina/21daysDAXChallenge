@@ -1,0 +1,59 @@
+table Suppliers
+	lineageTag: e93d6332-8e98-4424-8ec0-f9b9215b60c2
+
+	column SupplierID
+		dataType: int64
+		formatString: 0
+		lineageTag: e521768e-2403-42f9-9d01-9df6e0465d93
+		summarizeBy: none
+		sourceColumn: SupplierID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierName
+		dataType: string
+		lineageTag: 49fd793b-3f10-4ed3-871e-caf220e4f124
+		summarizeBy: none
+		sourceColumn: SupplierName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContactName
+		dataType: string
+		lineageTag: bf13e17d-0b7f-4407-9eea-2e8fbe3fc07f
+		summarizeBy: none
+		sourceColumn: ContactName
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 3221f24e-1dcd-4452-bd9c-b1c6386d879c
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 4e1b779d-1398-4f6b-b28c-c187307cccdc
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Suppliers = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("Z:\DAXChallenge.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Suppliers", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"SupplierID", Int64.Type}, {"SupplierName", type text}, {"ContactName", type text}, {"City", type text}, {"Country", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

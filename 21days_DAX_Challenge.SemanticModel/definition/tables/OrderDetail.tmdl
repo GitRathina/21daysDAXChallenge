@@ -1,0 +1,75 @@
+table OrderDetail
+	lineageTag: 043399d4-bc50-4baf-8d7a-f6c44841f568
+
+	column OrderDetailID
+		dataType: int64
+		formatString: 0
+		lineageTag: b6e82dea-273d-433f-aad9-c574bfb177ee
+		summarizeBy: count
+		sourceColumn: OrderDetailID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7bfb0410-7d8a-4d3e-a183-a74d3fe9d3f6
+		summarizeBy: none
+		sourceColumn: OrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductID
+		dataType: double
+		formatString: 0
+		lineageTag: 1b9a0826-58fd-4d0b-8ef6-4438c6513be4
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 9eca09b6-ee00-45c9-99ad-cb659d7fbffd
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: int64
+		formatString: 0
+		lineageTag: be69927b-a050-4eb2-a06e-58fd137f08d6
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: double
+		lineageTag: cd27d609-da77-41f1-91d6-dfab8e1de80f
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition OrderDetail = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("Z:\DAXChallenge.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "OrderDetail", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"OrderDetailID", Int64.Type}, {"OrderID", Int64.Type}, {"ProductID", Int64.Type}, {"Quantity", Int64.Type}, {"UnitPrice", Int64.Type}, {"Discount", type number}}, "en-US"),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed column type",9,8,Replacer.ReplaceValue,{"ProductID"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value",10,5,Replacer.ReplaceValue,{"ProductID"})
+				in
+				  #"Replaced Value1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

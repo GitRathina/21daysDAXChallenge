@@ -1,0 +1,85 @@
+table Orders
+	lineageTag: 880f119a-91da-4d8b-9c7e-8266eecb51e2
+
+	column OrderID
+		dataType: int64
+		formatString: 0
+		lineageTag: a443e81f-3afe-4c6d-8875-5ec6081370a1
+		summarizeBy: none
+		sourceColumn: OrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: beb6b977-3138-4643-b46d-954025dab29b
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: int64
+		formatString: 0
+		lineageTag: 0153d43b-d824-432c-9d0a-875a6138a600
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7808388f-909f-428c-9f39-3c2d59b61557
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		variation Variation
+			isDefault
+			relationship: 2b9aab0b-bded-48c6-a2ca-79330f510446
+			defaultHierarchy: LocalDateTable_4a533915-58d0-4ed6-9a48-b14a0b4bebd1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ShipDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d35434c3-db90-4a97-af68-2ec662d1eff4
+		summarizeBy: none
+		sourceColumn: ShipDate
+
+		variation Variation
+			isDefault
+			relationship: cda44a5b-3eaf-4e98-bdb2-33c308e75355
+			defaultHierarchy: LocalDateTable_ada71a0f-4ebd-49d1-ab3c-d2bd17d69f2d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Status
+		dataType: string
+		lineageTag: 9ef88cad-f2a6-4f25-98b0-ff5bf06150d7
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Orders = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("Z:\DAXChallenge.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Orders", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"OrderID", Int64.Type}, {"CustomerID", Int64.Type}, {"EmployeeID", Int64.Type}, {"OrderDate", type date}, {"ShipDate", type date}, {"Status", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

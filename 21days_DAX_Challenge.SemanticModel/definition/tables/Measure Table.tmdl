@@ -1,0 +1,88 @@
+table 'Measure Table'
+	lineageTag: e464284b-d85e-4833-92d3-75740bbea94e
+
+	measure 'Top category' = ```
+			
+			
+			VAR T = 
+			           ADDCOLUMNS(
+			            VALUES(Products[CategoryID]),
+			           "ProductCount", CALCULATE(COUNTROWS(Products))
+			           )
+			
+			VAR  MAXcount = 
+			     MAXX(T,[ProductCount])
+			
+			VAR  Toprow = 
+			    FILTER(T, [ProductCount] = MAXcount)
+			
+			VAR TOPID = MAXX(Toprow, Products[CategoryID])
+			
+			RETURN LOOKUPVALUE(Category[CategoryName], Category[CategoryID],TOPID)
+			```
+		lineageTag: f40f7307-3de0-46b3-905e-6d54d3711189
+
+	measure 'Top categorty' = CALCULATE(SELECTEDVALUE(Category[CategoryName]),TOPN(1, Products, CALCULATE(COUNT(Products[ProductID])),DESC))
+		lineageTag: 090a4e0d-1527-4366-9fd1-ab1c0de4c34f
+
+	measure 'Most Products' = ```
+			
+			CALCULATE(
+			    SELECTEDVALUE(
+			        Category[CategoryName], 
+			        "Mas de un resultado"
+			    ),
+			    TOPN(
+			        1, 
+			        Category,
+			        CALCULATE(COUNT(Products[ProductID])),
+			        DESC,
+			        Category[CategoryID],
+			        ASC
+			    )
+			)
+			```
+		lineageTag: 203b8e50-aa8f-4247-8d80-579174fc14b6
+
+	measure Top1product = Calculate(SELECTEDVALUE(Products[ProductName]),TOPN(1, Products,CALCULATE(SUM(OrderDetail[Quantity])),DESC))
+		lineageTag: f07d87cc-e9ba-4976-9de3-8ce1d41d2305
+
+	measure 'Avg Price of discontinued products' = CALCULATE(AVERAGE(Products[UnitPrice]), Products[Discontinued]=TRUE())
+		formatString: 0
+		lineageTag: 60993067-e1a2-4e74-b696-472b1839fdc1
+
+	measure 'Avg Price of discontinued products_Anotherway' =
+			AVERAGEX(
+			    FILTER(Products, Products[Discontinued]=TRUE()),Products[UnitPrice])
+		lineageTag: c33572b5-8867-4d8f-b216-8c7d35672ed0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Discontinued Products Sales' = CALCULATE([Total Sales],FILTER(Products, Products[Discontinued]=TRUE()))
+		formatString: 0.0
+		lineageTag: 7d9272a3-aa9a-4a80-b14e-35dd3d2a9760
+
+	measure 'Total Sales' = SUMX(OrderDetail, OrderDetail[Quantity]*OrderDetail[UnitPrice])
+		formatString: 0.0
+		lineageTag: acdf7bb0-7a22-43a4-9dc5-964d315f74a5
+
+	measure '%Sales Discontinued' = DIVIDE([Discontinued Products Sales],[Total Sales])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 26b9f149-3dd3-4972-b546-38c68f75e685
+
+	column Value
+		isHidden
+		formatString: 0
+		lineageTag: 9d3b88f9-6b45-4376-8611-ba7b77d6f22a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Measure Table' = calculated
+		mode: import
+		source = {1}
+
+	annotation PBI_Id = 87db8c7909dd4ab39b8401f68f9fbe3c
+

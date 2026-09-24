@@ -1,0 +1,102 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "db2ca161b3852d5ddb6a",
+  "position": {
+    "x": 639.68127490039842,
+    "y": 114.02390438247012,
+    "z": 2,
+    "height": 332.74900398406373,
+    "width": 589.48207171314743,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measure Table"
+                    }
+                  },
+                  "Property": "Discontinued Products Sales"
+                }
+              },
+              "queryRef": "Measure Table.Discontinued Products Sales",
+              "nativeQueryRef": "Discontinued Products Sales"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measure Table"
+                    }
+                  },
+                  "Property": "%Sales Discontinued"
+                }
+              },
+              "queryRef": "Measure Table.%Sales Discontinued",
+              "nativeQueryRef": "%Sales Discontinued"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Measure Table"
+                  }
+                },
+                "Property": "Discontinued Products Sales"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "85ce35725fe8bc8592b9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measure Table"
+              }
+            },
+            "Property": "Discontinued Products Sales"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9b16d68f424674bf720e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measure Table"
+              }
+            },
+            "Property": "%Sales Discontinued"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
