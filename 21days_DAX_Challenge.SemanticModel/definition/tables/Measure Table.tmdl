@@ -70,6 +70,20 @@ table 'Measure Table'
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 26b9f149-3dd3-4972-b546-38c68f75e685
 
+	measure 'Ontime Deliveries' =
+			
+			
+			VAR B = COUNTROWS(
+			FILTER(Orders,NOT(ISBLANK(Orders[ShipDate]))&&
+			       Orders[OrderDate]=Orders[ShipDate]))
+			
+			VAR A =  calculate(COUNT(Orders[OrderID]),(Orders[OrderDate]=Orders[ShipDate]))
+			
+			return A
+		lineageTag: 3fbc26e0-8247-4e9f-afa4-66e7c49fb929
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Value
 		isHidden
 		formatString: 0
